@@ -1,0 +1,15 @@
+*.class
+.classpath
+.project
+**/target/**
+.settings/**
+lib/**
+doc/**
+.idea/
+*.iml
+*.versionsBackup
+
+# Package Files #
+*.jar
+
+*.log
