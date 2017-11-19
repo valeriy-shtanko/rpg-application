@@ -1,0 +1,6 @@
+INIT|NAME;room1;;|HQ! HQ... I am in a white empty room. It's all coverd with white tiles. On the floor there's a trail of blood. It's guiding somewhere away.|feedback|
+INIT|NAME;room2;;|This room seems to be just an empty space, all in black tiles. Blood trail, it runs from the door to the middle of the room.|feedback|
+INIT|NAME;door;;|There's a door here.|feedback-3|
+GO|NAME;door;;|||
+UPGRADE|NAME;upgrade-health;;|My health has been upgraded||
+UPGRADE|NAME;upgrade-strength;;|My strength has been upgraded||

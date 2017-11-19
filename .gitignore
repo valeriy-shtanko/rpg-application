@@ -4,7 +4,8 @@
 **/target/**
 .settings/**
 lib/**
-doc/**
+doc/auto1-coding-puzzle-backend.pdf
+doc/*.jpg
 .idea/
 *.iml
 *.versionsBackup
