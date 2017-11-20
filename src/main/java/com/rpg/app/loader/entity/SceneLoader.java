@@ -35,7 +35,7 @@ public class SceneLoader {
             throw new GameLoaderException("Cannot load SceneEntity from string '%s'.", str);
         }
 
-        SceneEntity entity = new SceneEntityImpl(items.get(0));
+        SceneEntity entity = new SceneEntityImpl(items.get(0).trim());
 
         for (int i = 1; i < items.size(); i++) {
             entity.getGameObjects().add(GameObjectLoader.fromString(items.get(i)));

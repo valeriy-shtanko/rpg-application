@@ -32,6 +32,11 @@ public class ValueProperty implements GameProperty {
     }
 
     @Override
+    public void setValue(PropertyValue value) {
+        this.value = value;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

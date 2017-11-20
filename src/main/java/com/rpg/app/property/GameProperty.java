@@ -5,12 +5,13 @@ package com.rpg.app.property;
  */
 public interface GameProperty {
     String HEALTH_PROPERTY     = "health";
-    String STRENGTH_PR0PERTY   = "strengh";
-    String EXPIRIENCE_PR0PERTY = "expirience";
+    String STRENGTH_PR0PERTY   = "strength";
+    String EXPERIENCE_PR0PARTY = "experience";
 
     PropertyType getType();
 
     default String getName() { return ""; }
 
     default PropertyValue getValue() { return null; }
+    default void setValue(PropertyValue value) { }
 }

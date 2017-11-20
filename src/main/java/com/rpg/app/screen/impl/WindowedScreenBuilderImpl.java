@@ -32,13 +32,27 @@ public class WindowedScreenBuilderImpl extends ScreenBuilderImpl {
 
         for(int i = 0; i <= height; i++) {
             setCursorPosition(0, i);
-            //append(brush);
             eraseLine();
             newLine();
         }
 
+        drawBorder();
+
         return setCursorPosition(0, 0);
     }
+
+    public ScreenBuilder drawBorder() {
+        saveCursorPosition();
+
+        setCursorPosition(0, 0);
+
+        append(createString('─', width));
+
+        restoreCursorPosition();
+
+        return this;
+    }
+
 
     @Override
     public ScreenBuilder newLine() {
@@ -84,21 +98,6 @@ public class WindowedScreenBuilderImpl extends ScreenBuilderImpl {
 
         return this;
     }
-
-//    TODO: Should be also implemented
-//
-//    @Override
-//    public ScreenBuilder moveCursorUp(final int y) {}
-//
-//    @Override
-//    public ScreenBuilder moveCursorDown(final int y) {}
-//
-//    @Override
-//    public ScreenBuilder moveCursorRight(final int x) {}
-//
-//    @Override
-//    public ScreenBuilder moveCursorLeft(final int x) {}
-
 
     // --------------------------------------------------------------------------------------------
     // Private methods

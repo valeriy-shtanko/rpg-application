@@ -17,6 +17,7 @@ import com.rpg.app.screen.ScreenInput;
 
 import static com.rpg.app.screen.ScreenInput.INVALID_INPUT;
 import static com.rpg.app.screen.ScreenInput.QUIT_GAME;
+import static com.rpg.app.screen.ScreenInput.REFRESH;
 import static com.rpg.app.screen.ScreenInput.SAVE_GAME;
 
 /**
@@ -25,8 +26,8 @@ import static com.rpg.app.screen.ScreenInput.SAVE_GAME;
 public class RpgApplication {
 
     public static void main( String[] args ) throws Exception {
-        List<BriefEntity> briefs = GameLoader.loadBriefsFromFile("briefs");
-        List<SceneEntity> scenes = GameLoader.loadScenesFromFile("scenes");
+        List<BriefEntity> briefs = GameLoader.loadBriefsFromFile("/home/valeriy/.tmp/briefs");
+        List<SceneEntity> scenes = GameLoader.loadScenesFromFile("/home/valeriy/.tmp/scenes");
 
         WorldManager worldManager = new WorldManager();
 
@@ -48,9 +49,15 @@ public class RpgApplication {
 
             // Prepare Input section
             List<BriefEntity> entities = worldManager.invokeOptions();
+            List<BriefEntity> displayedEntities = new ArrayList<>();
             List<InputOption> options = new ArrayList<>();
 
-            entities.forEach(e -> options.add(new InputOption(e.getCommand(), e.getProperty().getName())));
+            entities.forEach(e -> {
+                if (isDisplayed(e)) {
+                    options.add(new InputOption(e.getCommand(), e.getProperty().getName()));
+                    displayedEntities.add(e);
+                }
+            });
 
             ScreenInput input = Screen.getInputControl();
             input.setOptions(options);
@@ -63,6 +70,11 @@ public class RpgApplication {
             Screen.display();
 
             int selectedNumber = input.readInput();
+
+            if (selectedNumber == REFRESH) {
+                commandResponse = worldManager.refresh();
+                continue;
+            }
 
             if (selectedNumber == QUIT_GAME) {
                 break;
@@ -77,12 +89,14 @@ public class RpgApplication {
                 continue;
             }
 
+            BriefEntity selectedBrief;
+
             // Handle input
-            BriefEntity selectedBrief = entities.get(selectedNumber);
-
-            commandResponse = worldManager.applyCommand(selectedBrief.getCommand(), selectedBrief.getProperty());
+            if (selectedNumber < entities.size()) {
+                selectedBrief = displayedEntities.get(selectedNumber);
+                commandResponse = worldManager.applyCommand(selectedBrief.getCommand(), selectedBrief.getProperty());
+            }
         }
-
     }
 
 
@@ -97,15 +111,19 @@ public class RpgApplication {
 
         screenBuilder.setBackground(Color.RED)
                      .setForeground(Color.WHITE)
-                     .moveCursorRight(1)
+                     .bold()
+                     .moveCursorRight(2)
                      .append("Player statistics:")
+                     .boldOff()
                      .resetTextAttributes()
-                     .newLine();
+                     .newLine().newLine();
 
         player.getProperties()
               .forEach(p ->  {
                   if (p.getType() == PropertyType.VALUE) {
-                      screenBuilder.moveCursorRight(1).append("%s : %d", p.getName(), p.getValue().asInteger()).newLine();
+                      screenBuilder.moveCursorRight(2)
+                                   .append("%s : %d", p.getName(), p.getValue().asInteger())
+                                   .newLine();
                   }});
 
         Screen.append(screenBuilder);
@@ -119,14 +137,16 @@ public class RpgApplication {
 
         screenBuilder.setBackground(Color.RED)
                      .setForeground(Color.WHITE)
-                     .moveCursorRight(1)
+                     .bold()
+                     .moveCursorRight(2)
                      .append("Inventory:")
+                     .boldOff()
                      .resetTextAttributes()
-                     .newLine();
+                     .newLine().newLine();
 
-        screenBuilder.append("player item-1 : 2").newLine()
-                     .append("player item-2 : 5").newLine()
-                     .append("player item-3 : 1").newLine();
+        screenBuilder.moveCursorRight(1).append("player item-1 : 2").newLine()
+                     .moveCursorRight(1).append("player item-2 : 5").newLine()
+                     .moveCursorRight(1).append("player item-3 : 1").newLine();
 
         Screen.append(screenBuilder);
     }
@@ -137,17 +157,28 @@ public class RpgApplication {
         screenBuilder.eraseScreen()
                      .setBackground(Color.RED)
                      .setForeground(Color.WHITE)
-                     .moveCursorRight(1)
+                     .bold()
+                     .moveCursorRight(2)
                      .append("Brief information:")
+                     .boldOff()
                      .resetTextAttributes()
-                     .newLine();
+                     .newLine().newLine();
 
-        briefs.forEach(b -> screenBuilder.setForeground(Color.YELLOW).append(b.getText()).newLine());
+        briefs.forEach(b -> screenBuilder.setForeground(Color.GREEN)
+                                         .bold()
+                                         .append(b.getText())
+                                         .newLine());
 
-        screenBuilder.setForeground(Color.WHITE)
+        screenBuilder.boldOff()
+                     .setForeground(Color.WHITE)
                      .resetTextAttributes()
                      .newLine();
 
         Screen.append(screenBuilder);
+    }
+
+    private static boolean isDisplayed(BriefEntity entity) {
+        return !"INIT".equalsIgnoreCase(entity.getCommand()) &&
+               !"DEPLETE".equalsIgnoreCase(entity.getCommand());
     }
 }

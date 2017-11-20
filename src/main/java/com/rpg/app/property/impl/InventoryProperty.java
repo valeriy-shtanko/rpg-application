@@ -24,7 +24,7 @@ public class InventoryProperty implements GameProperty {
 
     @Override
     public String getName() {
-        return null;
+        return "";
     }
 
     @Override

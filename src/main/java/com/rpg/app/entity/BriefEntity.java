@@ -1,5 +1,7 @@
 package com.rpg.app.entity;
 
+import java.util.List;
+
 import com.rpg.app.property.GameProperty;
 
 /**
@@ -12,5 +14,5 @@ public interface BriefEntity {
 
     GameProperty getProperty();
 
-    String getFeedback();
+    List<FeedBackEntity> getFeedback();
 }

@@ -11,6 +11,16 @@ public class GameLoaderUtils {
     public final static String PROPERTIES_SEPARATOR = "&";
     public final static String SCENE_ITEM_DELIMETER = "@";
 
+    public final static String COMMENT_PREFIX       = "#";
 
-    public final static String COMMENT_PREFIX  = "#";
+
+
+    public static boolean isNumeric(String str) {
+        return str.trim().matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    }
+
+    public static String readString(String str, String defValue) {
+        return "null".equalsIgnoreCase(str.trim()) ? defValue
+                                                   : str.trim();
+    }
 }

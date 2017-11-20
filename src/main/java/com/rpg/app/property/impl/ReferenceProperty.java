@@ -21,7 +21,7 @@ public class ReferenceProperty implements GameProperty {
 
     @Override
     public String getName() {
-        return null;
+        return "";
     }
 
     @Override

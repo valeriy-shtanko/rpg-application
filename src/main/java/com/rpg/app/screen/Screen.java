@@ -14,8 +14,8 @@ public class Screen {
 
     public static final int SCREEN_LEFT   =  1;
     public static final int SCREEN_TOP    =  1;
-    public static final int SCREEN_WIDTH  = 100;
-    public static final int SCREEN_HEIGHT = 60;
+    public static final int SCREEN_WIDTH  = 114;
+    public static final int SCREEN_HEIGHT = 70;
 
     public static final int STATS_WINDOW_LEFT   = SCREEN_LEFT;
     public static final int STATS_WINDOW_TOP    = BANNER_HEIGHT;
@@ -30,7 +30,7 @@ public class Screen {
     public static final int BRIEF_WINDOW_LEFT   = SCREEN_LEFT;
     public static final int BRIEF_WINDOW_TOP    = Math.max(STATS_WINDOW_TOP + STATS_WINDOW_HEIGHT, INVENTORY_WINDOW_TOP + INVENTORY_WINDOW_HEIGHT) + 1;
     public static final int BRIEF_WINDOW_WIDTH  = SCREEN_WIDTH;
-    public static final int BRIEF_WINDOW_HEIGHT = 5;
+    public static final int BRIEF_WINDOW_HEIGHT = 7;
 
     public static final int INPUT_WINDOW_LEFT   = SCREEN_LEFT;
     public static final int INPUT_WINDOW_TOP    = BRIEF_WINDOW_TOP + BRIEF_WINDOW_HEIGHT + 1;

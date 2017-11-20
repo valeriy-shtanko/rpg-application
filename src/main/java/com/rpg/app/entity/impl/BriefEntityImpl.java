@@ -1,6 +1,9 @@
 package com.rpg.app.entity.impl;
 
+import java.util.List;
+
 import com.rpg.app.entity.BriefEntity;
+import com.rpg.app.entity.FeedBackEntity;
 import com.rpg.app.property.GameProperty;
 
 /**
@@ -9,10 +12,10 @@ import com.rpg.app.property.GameProperty;
 public class BriefEntityImpl implements BriefEntity {
     private String command;
     private String text;
-    private String feedback;
     private GameProperty property;
+    List<FeedBackEntity> feedback;
 
-    public BriefEntityImpl(String command, GameProperty property, String text, String feedback) {
+    public BriefEntityImpl(String command, GameProperty property, String text, List<FeedBackEntity> feedback) {
         this.text = text;
         this.command = command;
         this.property = property;
@@ -33,8 +36,9 @@ public class BriefEntityImpl implements BriefEntity {
     public GameProperty getProperty() {
         return property;
     }
+
     @Override
-    public String getFeedback() {
+    public List<FeedBackEntity> getFeedback() {
         return feedback;
     }
 }

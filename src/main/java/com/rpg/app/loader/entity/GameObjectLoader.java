@@ -38,7 +38,7 @@ public class GameObjectLoader {
         GameObject gameObject = new GameObjectImpl(items.get(0));
 
         for (int i = 1; i < items.size(); i++) {
-            gameObject.getProperties().add(GamePropertyLoader.fromString(items.get(i)));
+            gameObject.getProperties().add(GamePropertyLoader.fromString(items.get(i).trim()));
         }
 
         return gameObject;

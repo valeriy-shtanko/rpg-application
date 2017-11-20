@@ -62,7 +62,7 @@ public class GamePropertyLoader {
         List<String> items = Arrays.asList(str.split(String.format("\\s*%s\\s*", PROPERTY_SEPARATOR)));
 
         // Type
-        PropertyType propertyType = PropertyType.valueOf(items.get(0));
+        PropertyType propertyType = PropertyType.valueOf(items.get(0).trim());
 
         // Name an value
         switch(propertyType) {

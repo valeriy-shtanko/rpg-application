@@ -14,9 +14,10 @@ import com.rpg.app.screen.ScreenInput;
  */
 public class InputControlImpl implements ScreenInput {
 
-    private static final String SAVE_KEY = "s";
-    private static final String QUIT_KEY = "q";
-    private static final String PROMPT   = "=> ";
+    private static final String REFRES_KEY = "r";
+    private static final String SAVE_KEY   = "s";
+    private static final String QUIT_KEY   = "q";
+    private static final String PROMPT     = "=> ";
 
     private List<InputOption> options = new ArrayList<>();
 
@@ -24,10 +25,12 @@ public class InputControlImpl implements ScreenInput {
         screenBuilder.eraseScreen()
                      .setBackground(Color.RED)
                      .setForeground(Color.WHITE)
+                     .bold()
                      .moveCursorRight(1)
                      .append("Select your action:")
+                     .boldOff()
                      .resetTextAttributes()
-                     .newLine();
+                     .newLine().newLine();
 
         for (int i = 0; i < options.size(); i++) {
             InputOption option = options.get(i);
@@ -39,13 +42,14 @@ public class InputControlImpl implements ScreenInput {
 
         // Functional keys
         screenBuilder.newLine()
+                     .moveCursorRight(1).append("%s) Look around", REFRES_KEY).newLine()
                      .moveCursorRight(1).append("%s) Save game", SAVE_KEY).newLine()
                      .moveCursorRight(1).append("%s) Quit game", QUIT_KEY).newLine()
                      .moveCursorRight(1).newLine()
                      .moveCursorRight(1).append(PROMPT);
 
         // Set cursor position right after prompt
-        screenBuilder.setCursorPosition(PROMPT.length(), options.size() + 5);
+        screenBuilder.setCursorPosition(PROMPT.length() + 1, options.size() + 7);
 
         return screenBuilder;
     }
@@ -60,6 +64,11 @@ public class InputControlImpl implements ScreenInput {
         input = input.toLowerCase().trim();
 
         // Functional key's
+
+        if (REFRES_KEY.equals(input)) {
+            return REFRESH;
+        }
+
         if (SAVE_KEY.equals(input)) {
             return SAVE_GAME;
         }
