@@ -28,7 +28,15 @@ public class WindowedScreenBuilderImpl extends ScreenBuilderImpl {
 
     @Override
     public ScreenBuilder eraseScreen() {
-        // TODO: add clearing of window space
+        setCursorPosition(0, 0);
+
+        for(int i = 0; i <= height; i++) {
+            setCursorPosition(0, i);
+            //append(brush);
+            eraseLine();
+            newLine();
+        }
+
         return setCursorPosition(0, 0);
     }
 

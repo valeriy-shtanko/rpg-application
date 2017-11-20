@@ -165,6 +165,10 @@ public class ScreenBuilderImpl implements ScreenBuilder {
         return builder.toString();
     }
 
+    protected String createString(char symbol, int size ) {
+        return new String(new char[size]).replace('\0', symbol);
+    }
+
     //-----------------------------------------------------------------------------------------------------
     // Private helper methods for building escape sequence
     //
