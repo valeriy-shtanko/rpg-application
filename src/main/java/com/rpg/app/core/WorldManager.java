@@ -138,6 +138,7 @@ public class WorldManager {
 
     private void applyMove(GameProperty gameProperty) throws Exception {
         boolean isWantedObject = false;
+        String sceneId = "";
 
         for(GameObject gameObject : activeObjects) {
             for(GameProperty property : gameObject.getProperties()) {
@@ -150,10 +151,19 @@ public class WorldManager {
             if (isWantedObject) {
                 for(GameProperty property : gameObject.getProperties()) {
                     if(property.getType() == PropertyType.REFERENCE) {
-                        moveToScene(property.getValue().asString());
+                        sceneId = property.getValue().asString();
+                        break;
                     }
                 }
             }
+
+            if (!sceneId.isEmpty()) {
+                break;
+            }
+        }
+
+        if (!sceneId.isEmpty()) {
+            moveToScene(sceneId);
         }
     }
 
@@ -189,6 +199,13 @@ public class WorldManager {
                             .filter(o -> o.getId().equalsIgnoreCase(id))
                             .findFirst().orElse(null);
     }
+
+    private GameObject getActiveSceneObject(String id) {
+        return activeScene.getGameObjects().stream()
+                          .filter(o -> o.getId().equalsIgnoreCase(id))
+                          .findFirst().orElse(null);
+    }
+
 
     private void feedBackADD (GameObject gameObject, FeedBackEntity feedBackEntity) {
         if(gameObject == null) {
@@ -226,6 +243,12 @@ public class WorldManager {
 
         if (gameObject != null) {
             activeObjects.remove(gameObject);
+        }
+
+        gameObject = getActiveSceneObject(objectId);
+
+        if (gameObject != null) {
+           activeScene.getGameObjects().remove(gameObject);
         }
     }
 
@@ -274,7 +297,10 @@ public class WorldManager {
                                            .orElse(null);
 
         if(gameObject == null) {
-            activeScene.getGameObjects().add(new GameObjectImpl(feedBackEntity.getTargetId())); // FIXME: move object creation in another place
+            GameObject newGameObject = new GameObjectImpl(feedBackEntity.getTargetId());  // FIXME: move object creation in another place
+
+            activeScene.getGameObjects().add(newGameObject);
+            activeObjects.add(newGameObject);
         }
     }
 }

@@ -42,7 +42,7 @@ public class RpgApplication {
             displayPlayer(worldManager.getPlayer());
 
             // Display inventory section
-            displayInventory();
+            displayInventory(worldManager);
 
             // Display Brief section
             displayBrief(commandResponse);
@@ -130,7 +130,7 @@ public class RpgApplication {
     }
 
     // TODO
-    private static void displayInventory() {
+    private static void displayInventory(WorldManager worldManager) {
         ScreenBuilder screenBuilder = Screen.getInventoryWindowScreenBuilder();
 
         screenBuilder.eraseScreen();
@@ -144,9 +144,11 @@ public class RpgApplication {
                      .resetTextAttributes()
                      .newLine().newLine();
 
-        screenBuilder.moveCursorRight(1).append("player item-1 : 2").newLine()
-                     .moveCursorRight(1).append("player item-2 : 5").newLine()
-                     .moveCursorRight(1).append("player item-3 : 1").newLine();
+        worldManager.getPlayer().getProperties().forEach(p -> {
+            if (p.getType() == PropertyType.NAME) {
+                screenBuilder.moveCursorRight(1).append(p.getName()).newLine();
+            }
+        });
 
         Screen.append(screenBuilder);
     }
