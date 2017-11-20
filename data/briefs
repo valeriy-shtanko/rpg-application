@@ -1,6 +1,47 @@
-INIT|NAME;room1;;|HQ! HQ... I am in a white empty room. It's all coverd with white tiles. On the floor there's a trail of blood. It's guiding somewhere away.|feedback|
-INIT|NAME;room2;;|This room seems to be just an empty space, all in black tiles. Blood trail, it runs from the door to the middle of the room.|feedback|
-INIT|NAME;door;;|There's a door here.|feedback-3|
-GO|NAME;door;;|||
-UPGRADE|NAME;upgrade-health;;|My health has been upgraded||
-UPGRADE|NAME;upgrade-strength;;|My strength has been upgraded||
+#
+# Game script file
+#
+DEPLETE |           VALUE;  health;         0;          |I am dying!!!!
+DEPLETE |           VALUE;  experience;     0;          |No more steroids to spend|000;OFF;NAME;upgrade-health;       |000;OFF;NAME;upgrade-strength
+
+INIT    |           NAME;   door;;                      |There's a door here.
+GO      |           NAME;   door;;                      |Walking through a door.
+Use steroids to |           NAME;   upgrade-health;;            |My health has been upgraded|000;PLUS;VALUE;health;1            |000;PLUS;VALUE;experience;-1
+Use steroids to |           NAME;   upgrade-strength;;          |My strength has been upgraded|000;PLUS;VALUE;strength;1        |000;PLUS;VALUE;experience;-1
+
+INIT    |           NAME;   entry-room-tutorial-1;;     |INCOMING MESSEGE :      Link established. You are now connected to your Smith.     |000;SET;VALUE;experience;1|000;SET;VALUE;health;1|000;SET;VALUE;strenght;0|000;PLUS;VALUE;experience;-1
+INIT    |           NAME;   entry-room-tutorial-2;;     |  ...
+INIT    |           NAME;   entry-room-tutorial-3;;     |Be advised. Only available interfaces of remotely controlled clone soldier are text only.
+INIT    |           NAME;   entry-room-tutorial-4;;     |You will have to rely on option asessed by controlled subject and obsercations made by him.
+INIT    |           NAME;   entry-room-tutorial-5;;     |Observations are trascripted, as our crypto-algorythm is way too complex and data-heavy to allow anything more than text.
+INIT    |           NAME;   entry-room-tutorial-6;;     |Please, worry not, as Smiths are very self-sufficient and will unabruptly provide you with all necessary data of surroundnings to make a choice.
+INIT    |           NAME;   entry-room-tutorial-7;;     |To proceed. Type number of the option among ones provided by your Smith.
+
+Blink   |           NAME;   eyes;;                     |PHYSICAL RESPONSE : Eyes blinked.              ---  INCOMING MESSEGE : Worry not. From now on you wont have to conroll your Smith to such extent. He'll manage that on his own.   |  func-eyes;MAKE;NAME;1|  func-eyes;ADD;NAME;Eyes;|    dial1;KILL;NAME;1|        dial2;KILL;NAME;1|      dial4;KILL;NAME;1|      dial3;KILL;NAME;1|   dial5;KILL;NAME;1|  dial6;KILL;NAME;1|         dial7;KILL;NAME;1|                      tut1;KILL;NAME;1|
+
+Open    |           NAME;   Eyes;;                      |EYES RESPONSE : Room is poorly lit. I See a door in front.|        func-eyes;KILL;NAME;1|
+GO      |           NAME;   Trough door;;               |INNER MONOLOGUE : Affirmitive. Oh yes, i apologize. I am your Smith. You are controlling me. Please be nice to me.
+
+
+
+
+INIT    |           NAME;   room2;;                     |INNER MONOLOGUE : Affirmitive. Oh yes, i apologize. I am your Smith. You are controlling me. Please be nice to me.                ---- EYES RESPONsE : Room is wide and spacious. Ceiling is at least 10 meters high. In the middle is a man standing behind a desk. He's Talking to me.       ---HEARING RESPONSE : *Raspy manly voice* - Name's colonel Winters. I always brief and check newly launched clones. Seems like your brain implant transmits everything just fine. So my scanner tells me. You can move along throungh that door on far left.| A3;KILL;NAME;1| check-post;MAKE;NAME;1| check-post;ADD;NAME;check-post|
+INIT    |           NAME;   check-post;                 |EYES RESPONSE : Still the same spacious room. Seems like an empty hangar      ---- HEARING RESPONSE : *Colonel Winters* - Move along, as i said. And better get yourself something to wear. Your Smith will catch a cold.
+Adress  |           NAME;   colonel;;                   |VOICE OUTPUT : My directive was...        ---- HEARING RESPONSE : *Colonel Winters* - Nobody cares of your directives, you electrified meat. Move along. |colonel;KILL;NAME;1| angry-colonel;MAKE;NAME;1| angry-colonel;ADD;NAME;angry-colonel|   room2;KILL;NAME;1
+
+GO      |           NAME;   far-exit;                   ||
+INIT    |           NAME;   angry-colonel;              |EYES RESPONSE : There's colonel Winters again.     ---- HEARING RESPONCE : *Colonel Winters* - How many times do I have to repeat myself?
+
+
+INIT    |           NAME;   room3;;                     |EYES RESPONSE : Another hangar. But i see 3 boxes on the floor with my name on each one        ---- INNER MONOLOGUE : Wow, honestly, it IS my name, Little Smithy SM1243-K, that's how my mom used to call m... wait a second. Yep... Now i get it.
+INIT    |           NAME;   Door-back;;                 |EYES RESPONSE : Door to the previous rooms seems to remain unlocked.
+Inspect |           NAME;   box-1;;                     |GENERAL REPORT : It contains a military style suit. Could be handy for camuflauge. | take-cam;MAKE;NAME;1| take-cam;ADD;NAME;military-suit| box-1;KILL;NAME;1
+Inspect |           NAME;   box-2;;                     |GENERAL REPORT : It's just a civilian suit. Regular blue colar outfit that is. | take-suit;MAKE;NAME;1| take-suit;ADD;NAME;civilian-diguise| box-2;KILL;NAME;1
+Inspect |           NAME;   box-3;;                     |INNER MONOLOGUE : It's just syringes. 8 Syringes in here. All are... Wait. I know these. These are military class versatile steroids. I can buff myself up using these. | take-exp;MAKE;NAME;1| take-exp;ADD;NAME;Steroids| box-3;KILL;NAME;1|
+
+TAKE    |           NAME;   military-suit;;             |ACTION : Military suit acquired. | take-cam;KILL;NAME;1|   000;ADD;NAME;Military-Camoflauge| 000;OFF;NAME;Civilian-outfit|
+TAKE    |           NAME;   civilian-disguise;;         |ACTION : Civilian suit acquired. | take-suit;KILL;NAME;1|  000;ADD;NAME;Civilian-suit| 000;OFF;NAME;Military-Camoflauge|
+TAKE    |           NAME;   Steroids;;                  |ACTION : 8 unit of steroids acquired. Now i can enhance my stats.| take-exp;KILL;NAME;1| 000;PLUS;VALUE;experience;8 | 000;OFF;NAME;upgrage-health| 000;OFF;NAME;upgrade-strength| 000;ADD;NAME;upgrade-health|000;ADD;NAME;upgrade-strength
+
+GO      |           NAME;   Door-back;;                 |STATUS : Walking to the previous room.
+INIT    |           NAME;   room4;;                     |Fourth room
