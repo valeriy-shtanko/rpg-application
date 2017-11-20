@@ -14,10 +14,12 @@ import com.rpg.app.screen.ScreenInput;
  */
 public class InputControlImpl implements ScreenInput {
 
-    private static final String REFRES_KEY = "r";
-    private static final String SAVE_KEY   = "s";
-    private static final String QUIT_KEY   = "q";
-    private static final String PROMPT     = "=> ";
+    private static final String REFRESH_KEY = "r";
+    private static final String SAVE_KEY    = "s";
+    private static final String LOAD_KEY    = "l";
+    private static final String QUIT_KEY    = "q";
+
+    private static final String PROMPT = "=> ";
 
     private List<InputOption> options = new ArrayList<>();
 
@@ -42,14 +44,15 @@ public class InputControlImpl implements ScreenInput {
 
         // Functional keys
         screenBuilder.newLine()
-                     .moveCursorRight(1).append("%s) Look around", REFRES_KEY).newLine()
+                     .moveCursorRight(1).append("%s) Look around", REFRESH_KEY).newLine()
                      .moveCursorRight(1).append("%s) Save game", SAVE_KEY).newLine()
+                     .moveCursorRight(1).append("%s) Load game", LOAD_KEY).newLine()
                      .moveCursorRight(1).append("%s) Quit game", QUIT_KEY).newLine()
                      .moveCursorRight(1).newLine()
                      .moveCursorRight(1).append(PROMPT);
 
         // Set cursor position right after prompt
-        screenBuilder.setCursorPosition(PROMPT.length() + 1, options.size() + 7);
+        screenBuilder.setCursorPosition(PROMPT.length() + 1, options.size() + 8);
 
         return screenBuilder;
     }
@@ -64,17 +67,11 @@ public class InputControlImpl implements ScreenInput {
         input = input.toLowerCase().trim();
 
         // Functional key's
-
-        if (REFRES_KEY.equals(input)) {
-            return REFRESH;
-        }
-
-        if (SAVE_KEY.equals(input)) {
-            return SAVE_GAME;
-        }
-
-        if (QUIT_KEY.equals(input)) {
-            return QUIT_GAME;
+        switch (input) {
+            case REFRESH_KEY : return REFRESH;
+            case SAVE_KEY    : return SAVE_GAME;
+            case LOAD_KEY    : return LOAD_GAME;
+            case QUIT_KEY    : return QUIT_GAME;
         }
 
         // Options key

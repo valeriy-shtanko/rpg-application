@@ -9,6 +9,7 @@ public interface ScreenInput {
     int SAVE_GAME = 1000;
     int QUIT_GAME = 1001;
     int REFRESH   = 1002;
+    int LOAD_GAME = 1003;
 
     int INVALID_INPUT = -1;
 

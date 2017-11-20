@@ -35,7 +35,7 @@ public class Screen {
     public static final int INPUT_WINDOW_LEFT   = SCREEN_LEFT;
     public static final int INPUT_WINDOW_TOP    = BRIEF_WINDOW_TOP + BRIEF_WINDOW_HEIGHT + 1;
     public static final int INPUT_WINDOW_WIDTH  = SCREEN_WIDTH;
-    public static final int INPUT_WINDOW_HEIGHT = 15;
+    public static final int INPUT_WINDOW_HEIGHT = 20;
 
     public static ScreenBuilder getScreenBuilder() {
         return new ScreenBuilderImpl();

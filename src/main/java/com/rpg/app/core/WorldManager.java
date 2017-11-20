@@ -47,7 +47,23 @@ public class WorldManager {
         return player;
     }
 
-    public void moveToScene(String sceneId)  throws Exception {
+    public SceneBank getScenes() {
+        return sceneBank;
+    }
+
+    public SceneEntity getActiveScene() {
+        return activeScene;
+    }
+
+    public void setActiveScene(SceneEntity activeScene) {
+        this.activeScene = activeScene;
+    }
+
+    public List<GameObject> getActiveObjects() {
+        return activeObjects;
+    }
+
+    public void moveToScene(String sceneId) throws Exception {
         activeScene = sceneBank.getScene(sceneId);
 
         activeObjects.clear();

@@ -14,6 +14,10 @@ public class SceneBank {
     public SceneBank() {
     }
 
+    public List<SceneEntity> getScenes() {
+        return entities;
+    }
+
     public void setScenes(List<SceneEntity> entities) {
         this.entities = entities;
     }
